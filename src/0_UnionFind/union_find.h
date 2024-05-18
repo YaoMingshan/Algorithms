@@ -1,11 +1,13 @@
 #pragma once
+#include <assert.h>
+
 #include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <assert.h>
 
-void PrintVec(std::vector<uint32_t> const& vec) {
+template <typename T>
+void PrintVec(std::vector<T> const& vec) {
   std::stringstream ss_idx;
   std::stringstream ss_val;
 
@@ -38,9 +40,7 @@ class QuickFind {
     }
   }
 
-  void Print() {
-    PrintVec(id_);
-  }
+  void Print() { PrintVec(id_); }
 
  private:
   std::vector<uint32_t> id_;
@@ -69,9 +69,7 @@ class QuickUnion {
     id_[rp] = rq;
   }
 
-  void Print() {
-    PrintVec(id_);
-  }  
+  void Print() { PrintVec(id_); }
 
  private:
   std::vector<uint32_t> id_;
@@ -121,9 +119,7 @@ class WeightedAndPathCopressionQuickUnion {
     return max_.at(rp);
   }
 
-  void Print() {
-    PrintVec(id_);
-  }
+  void Print() { PrintVec(id_); }
 
  private:
   const uint32_t N_;

@@ -1,7 +1,7 @@
 #include "0_UnionFind/union_find.h"
 #include "gtest/gtest.h"
 
-TEST(UNION_FIND_TEST, QuickFindTest) {
+TEST(UnionFindTest, QuickFindTest) {
   auto uf = QuickFind(8);
   uf.Union(0, 1);
   uf.Union(1, 2);
@@ -18,7 +18,7 @@ TEST(UNION_FIND_TEST, QuickFindTest) {
   ASSERT_TRUE(uf.Connected(4, 7));
 }
 
-TEST(UNION_FIND_TEST, QuickUnionTest) {
+TEST(UnionFindTest, QuickUnionTest) {
   auto uf = QuickUnion(8);
   uf.Union(0, 1);
   uf.Union(1, 2);
@@ -35,7 +35,7 @@ TEST(UNION_FIND_TEST, QuickUnionTest) {
   ASSERT_TRUE(uf.Connected(4, 7));
 }
 
-TEST(UNION_FIND_TEST, OptUnionFindTest) {
+TEST(UnionFindTest, OptUnionFindTest) {
   auto uf = WeightedAndPathCopressionQuickUnion(8);
   uf.Union(0, 1);
   uf.Union(1, 2);
@@ -53,7 +53,7 @@ TEST(UNION_FIND_TEST, OptUnionFindTest) {
   ASSERT_TRUE(uf.Connected(0, 7));
 }
 
-TEST(UNION_FIND_TEST, DeleteWithSuccessor) {
+TEST(UnionFindTest, DeleteWithSuccessor) {
   auto uf = WeightedAndPathCopressionQuickUnion(8);
   ASSERT_EQ(uf.Remove(4), 5);
   ASSERT_EQ(uf.Remove(6), 7);
