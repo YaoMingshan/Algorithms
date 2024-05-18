@@ -15,6 +15,8 @@ add_subdirectory(${EXTERNAL_PROJECT_DIR}/googletest)
 add_executable(hello hello.cpp)
 target_link_libraries(hello gtest gtest_main)
 
+add_test(NAME hello_test COMMAND hello)
+
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)

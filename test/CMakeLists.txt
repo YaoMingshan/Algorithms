@@ -14,4 +14,6 @@ foreach(TEST_FILE ${TEST_FILES})
 
     # 设置 include 目录
     target_include_directories(${TEST_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src)
+
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
 endforeach()
