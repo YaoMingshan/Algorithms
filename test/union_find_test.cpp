@@ -1,4 +1,4 @@
-#include "0_union_and_find/union_find.h"
+#include "0_UnionFind/union_find.h"
 #include "gtest/gtest.h"
 
 TEST(UNION_FIND_TEST, QuickFindTest) {
