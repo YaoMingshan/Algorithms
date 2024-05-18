@@ -1,8 +1,22 @@
 #pragma once
 #include <cstdint>
-#include <vector>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <vector>
+#include <assert.h>
+
+void PrintVec(std::vector<uint32_t> const& vec) {
+  std::stringstream ss_idx;
+  std::stringstream ss_val;
+
+  for (uint i = 0; i < vec.size(); ++i) {
+    ss_idx << std::to_string(i) << "  ";
+    ss_val << std::to_string(vec[i]) << "  ";
+  }
+
+  std::cout << "Idx: " << ss_idx.str() << std::endl;
+  std::cout << "Val: " << ss_val.str() << std::endl;
+}
 
 class QuickFind {
  public:
@@ -25,16 +39,7 @@ class QuickFind {
   }
 
   void Print() {
-    std::stringstream ss_idx;
-    std::stringstream ss_val;
-
-    for (uint i = 0; i < id_.size(); ++i) {
-      ss_idx << std::to_string(i) << "  ";
-      ss_val << std::to_string(id_[i]) << "  ";
-    }
-
-    std::cout << ss_idx.str() << std::endl;
-    std::cout << ss_val.str() << std::endl;
+    PrintVec(id_);
   }
 
  private:
@@ -64,15 +69,20 @@ class QuickUnion {
     id_[rp] = rq;
   }
 
+  void Print() {
+    PrintVec(id_);
+  }  
+
  private:
   std::vector<uint32_t> id_;
 };
 
 class WeightedAndPathCopressionQuickUnion {
  public:
-  WeightedAndPathCopressionQuickUnion(uint32_t N) {
+  WeightedAndPathCopressionQuickUnion(uint32_t N) : N_(N) {
     for (uint32_t i = 0; i < N; ++i) {
       id_.push_back(i);
+      max_.push_back(i);
     }
 
     sz_ = std::vector<uint32_t>(N, 1);
@@ -91,18 +101,33 @@ class WeightedAndPathCopressionQuickUnion {
   void Union(uint32_t p, uint32_t q) {
     auto rp = Root(p);
     auto rq = Root(q);
-
+    auto max_val = std::max(max_.at(rp), max_.at(rq));
     if (rp == rq) return;
     if (sz_.at(rp) < sz_[rq]) {
       id_[rp] = rq;
       sz_.at(rq) += sz_.at(rp);
+      max_.at(rq) = max_val;
     } else {
       id_[rq] = rp;
       sz_.at(rp) += sz_.at(rq);
+      max_.at(rp) = max_val;
     }
   }
 
+  uint32_t Remove(uint32_t p) {
+    assert(p < N_ - 1);
+    Union(p, p + 1);
+    auto rp = Root(p);
+    return max_.at(rp);
+  }
+
+  void Print() {
+    PrintVec(id_);
+  }
+
  private:
+  const uint32_t N_;
   std::vector<uint32_t> id_;
   std::vector<uint32_t> sz_;
+  std::vector<uint32_t> max_;
 };

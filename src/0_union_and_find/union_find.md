@@ -11,3 +11,8 @@ N长度的array，连在一起的node拥有相同的值
 N长度array，存储自己的parent node
 - find: O(N)
 - union: O(N), union会调用find
+# optimization
+Path compression: 尽量让树变得扁平，查找root时速度更快
+让小树指向大树
+- find: O(lg(N))
+- union: O(lg(N)), union会调用find
