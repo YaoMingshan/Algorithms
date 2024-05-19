@@ -27,7 +27,7 @@ TEST(AnalysisOfAlgoTest, BinarySearchTeset) {
     data_size = 2000;
     auto input = GenRandomInput<int32_t>(data_size, -100, 100);
     auto [result, duration] =
-        MeasureFuncExecTime(BinarySearchFunc<int32_t>, input, 0);
+        MeasureFuncExecTime(BinarySearchFunc<int32_t>, input, input.at(0));
     if (result) {
       std::cout << "Search result: " << std::to_string(*result) << std::endl;
     }
@@ -37,7 +37,7 @@ TEST(AnalysisOfAlgoTest, BinarySearchTeset) {
     data_size = 4000;
     auto input = GenRandomInput<int32_t>(data_size, -10000, 10000);
     auto [result, duration] =
-        MeasureFuncExecTime(BinarySearchFunc<int32_t>, input, 0);
+        MeasureFuncExecTime(BinarySearchFunc<int32_t>, input, input.at(0));
     if (result) {
       std::cout << "Search result: " << std::to_string(*result) << std::endl;
     }

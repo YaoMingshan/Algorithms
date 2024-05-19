@@ -34,3 +34,16 @@ class BinarySearch {
  private:
   std::vector<T> data_;
 };
+
+template <typename T>
+class BitonicSearch {
+ public:
+  BitonicSearch(std::vector<T> input) : data_(std::move(input)) {}
+
+  int32_t Find(T target) {
+    return 0;
+  }
+
+ private:
+  std::vector<T> data_;
+};
