@@ -1,2 +1,2 @@
 # Algorithms
-Recorder the study journey of algothms
+Recorder the study journey of algorithms
