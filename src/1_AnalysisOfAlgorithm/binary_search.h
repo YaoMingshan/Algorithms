@@ -41,7 +41,23 @@ class BitonicSearch {
   BitonicSearch(std::vector<T> input) : data_(std::move(input)) {}
 
   int32_t Find(T target) {
-    return 0;
+    // {1, 2, 3, 4, 3, 2, 1}
+    uint32_t lstart = 0;
+    uint32_t rend = data_.size() - 1;
+    uint32_t mid = (lstart + rend) / 2;
+    if (data_.at(mid) == target) {
+      return mid;
+    } else if (data_.at(mid) > target) {
+
+    }
+    while (true) {
+      if (data_.at(mid) == target) {
+        return mid;
+      } else if () {
+
+      }
+    }
+    return -1;
   }
 
  private:
