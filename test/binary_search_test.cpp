@@ -43,3 +43,20 @@ TEST(AnalysisOfAlgoTest, BinarySearchTeset) {
     }
   }
 }
+
+TEST(AnalysisOfAlgoTest, BitonicSearchTest) {
+  {
+    std::vector<uint32_t> in = {2};
+    auto bs = BitonicSearch<uint32_t>(in);
+    ASSERT_EQ(-1, bs.Find(1));
+    ASSERT_EQ(0, bs.Find(2));
+  }
+
+  {
+    std::vector<uint32_t> in = {2, 3};
+    auto bs = BitonicSearch<uint32_t>(in);
+    ASSERT_EQ(-1, bs.Find(1));
+    ASSERT_EQ(0, bs.Find(2));
+    ASSERT_EQ(1, bs.Find(3));
+  }
+}

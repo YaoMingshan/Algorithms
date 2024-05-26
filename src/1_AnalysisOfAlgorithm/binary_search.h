@@ -40,24 +40,46 @@ class BitonicSearch {
  public:
   BitonicSearch(std::vector<T> input) : data_(std::move(input)) {}
 
-  int32_t Find(T target) {
+  int32_t Find(T target, uint32_t start, uint32_t end) {
     // {1, 2, 3, 4, 3, 2, 1}
-    uint32_t lstart = 0;
-    uint32_t rend = data_.size() - 1;
-    uint32_t mid = (lstart + rend) / 2;
+    uint32_t mid = (start + end) / 2;
     if (data_.at(mid) == target) {
       return mid;
+    } else if (start == end) {
+      return -1;
     } else if (data_.at(mid) > target) {
-
-    }
-    while (true) {
-      if (data_.at(mid) == target) {
-        return mid;
-      } else if () {
-
+      if (data_.at(start) > target && data_.at(end) > target) {
+        return -1;
       }
+      if (data_.at(start) < target) {
+        auto new_end = mid == start ? mid : mid - 1;
+        auto find = Find(target, start, new_end);
+        if (find >= 0) return find;
+      }
+      if (data_.at(end) < target) {
+        auto find = Find(target, mid + 1, end);
+        if (find >= 0) return find;
+      }
+
+      return -1;
+    } else {
+      // data_.at(mid) < target
+      if (data_.at(mid + 1) > data_.at(mid)) {
+        auto find = Find(target, mid + 1, end);
+        if (find >= 0) return find;
+      } else {
+        auto new_end = mid == start ? mid : mid - 1;
+        auto find = Find(target, start, new_end);
+        if (find >= 0) return find;
+      }  
     }
+
+    assert(false);
     return -1;
+  }
+
+  int32_t Find(T target) {
+    return Find(target, 0, data_.size() - 1);
   }
 
  private:
