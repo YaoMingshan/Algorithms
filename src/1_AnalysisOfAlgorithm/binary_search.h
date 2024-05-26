@@ -66,13 +66,11 @@ class BitonicSearch {
       // data_.at(mid) < target
       if (data_.at(mid + 1) > data_.at(mid)) {
         auto find = Find(target, mid + 1, end);
-        if (find >= 0) return find;
-        else return -1;
+        return find;
       } else {
         auto new_end = mid == start ? mid : mid - 1;
         auto find = Find(target, start, new_end);
-        if (find >= 0) return find;
-        else return -1;
+        return find;
       }
     }
 

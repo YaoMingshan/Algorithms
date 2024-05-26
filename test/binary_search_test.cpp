@@ -67,5 +67,15 @@ TEST(AnalysisOfAlgoTest, BitonicSearchTest) {
     ASSERT_EQ(-1, bs.Find(11));
     ASSERT_EQ(6, bs.Find(8));
     ASSERT_EQ(2, bs.Find(5));
-  } 
+  }
+
+  {
+    std::vector<uint32_t> in = {1, 3, 5, 7, 9, 10, 2, 0};
+    auto bs = BitonicSearch<uint32_t>(in);
+    ASSERT_EQ(0, bs.Find(1));
+    ASSERT_EQ(-1, bs.Find(11));
+    ASSERT_EQ(7, bs.Find(0));
+    ASSERT_EQ(6, bs.Find(2));
+    ASSERT_EQ(2, bs.Find(5));
+  }
 }
