@@ -3,7 +3,6 @@ build/
 bin/
 
 # 忽略IDE和编辑器生成的文件和目录
-.vscode/
 .idea/
 
 # 忽略临时文件
