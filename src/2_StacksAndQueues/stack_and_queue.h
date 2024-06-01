@@ -77,25 +77,22 @@ class LinkedListStack : public Stack<T> {
     auto node = std::make_unique<LinkedListNode<T>>(v);
     node->next_ = std::move(first_);
     first_ = std::move(node);
+    size_++;
   }
   virtual T Pop() override {
     assert(!IsEmpty());
     auto v = first_->val_;
     first_ = std::move(first_->next_);
+    size_--;
     return v;
   }
   virtual bool IsEmpty() const override { return first_ == nullptr; }
   virtual uint32_t Size() const override {
-    uint32_t size = 0;
-    auto current = first_.get();
-    while (current != nullptr) {
-      ++size;
-      current = current->next_.get();
-    }
-    return size;
+    return size_;
   }
 
  private:
+  uint32_t size_ = 0;
   std::unique_ptr<LinkedListNode<T>> first_ = nullptr;
 };
 
@@ -197,26 +194,23 @@ class LinkedListQueue : public Queue<T> {
       end_->next_ = std::move(node);
       end_ = end_->next_.get();
     }
+
+    size_++;
   }
   virtual T Dequeue() override {
     assert(!IsEmpty());
     auto v = std::move(begin_->val_);
     begin_ = std::move(begin_->next_);
+    size_--;
     return v;
   }
   virtual bool IsEmpty() const override { return begin_ == nullptr; }
   virtual uint32_t Size() const override {
-    uint32_t size = 0;
-    auto current = begin_.get();
-    while (current != nullptr) {
-      ++size;
-      current = current->next_.get();
-    }
-
-    return size;
+    return size_;
   }
 
  private:
+  uint32_t size_ = 0;
   std::unique_ptr<LinkedListNode<T>> begin_ = nullptr;
   LinkedListNode<T>* end_ = nullptr;
 };
