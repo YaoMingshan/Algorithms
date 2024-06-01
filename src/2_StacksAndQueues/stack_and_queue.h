@@ -17,8 +17,8 @@ class Stack {
   virtual ~Stack() = default;
   virtual void Push(T const&) = 0;
   virtual T Pop() = 0;
-  virtual bool IsEmpty() = 0;
-  virtual uint32_t Size() = 0;
+  virtual bool IsEmpty() const = 0;
+  virtual uint32_t Size() const = 0;
 };
 
 template <typename T>
@@ -84,8 +84,8 @@ class LinkedListStack : public Stack<T> {
     first_ = std::move(first_->next_);
     return v;
   }
-  virtual bool IsEmpty() override { return first_ == nullptr; }
-  virtual uint32_t Size() override {
+  virtual bool IsEmpty() const override { return first_ == nullptr; }
+  virtual uint32_t Size() const override {
     uint32_t size = 0;
     auto current = first_.get();
     while (current != nullptr) {
@@ -124,8 +124,8 @@ class ArrayStack : public Stack<T> {
       Resize(capacity_ / 2);
     return v;
   }
-  virtual bool IsEmpty() override { return stack_.empty(); }
-  virtual uint32_t Size() override { return stack_.size(); }
+  virtual bool IsEmpty() const override { return stack_.empty(); }
+  virtual uint32_t Size() const override { return stack_.size(); }
 
  private:
   void Resize(uint32_t capacity) {
@@ -151,8 +151,8 @@ class Queue {
 
   virtual void Enqueue(T const&) = 0;
   virtual T Dequeue() = 0;
-  virtual bool IsEmpty() = 0;
-  virtual uint32_t Size() = 0;
+  virtual bool IsEmpty() const = 0;
+  virtual uint32_t Size() const = 0;
 };
 
 template <typename T>
@@ -180,8 +180,8 @@ class LinkedListQueue : public Queue<T> {
   LinkedListQueue& operator=(LinkedListQueue const& q) {
     if (this != &q) {
       LinkedListQueue temp(q);
-      swap(begin_, temp.begin_);
-      swap(end_, temp.end_);
+      std::swap(begin_, temp.begin_);
+      std::swap(end_, temp.end_);
     }
     return *this;
   }
@@ -194,8 +194,8 @@ class LinkedListQueue : public Queue<T> {
       begin_ = std::move(node);
       end_ = begin_.get();
     } else {
-      end_.next_ = std::move(node);
-      end_ = end_.next_.get();
+      end_->next_ = std::move(node);
+      end_ = end_->next_.get();
     }
   }
   virtual T Dequeue() override {
@@ -204,8 +204,8 @@ class LinkedListQueue : public Queue<T> {
     begin_ = std::move(begin_->next_);
     return v;
   }
-  virtual bool IsEmpty() override { return begin_ == nullptr; }
-  virtual uint32_t Size() override {
+  virtual bool IsEmpty() const override { return begin_ == nullptr; }
+  virtual uint32_t Size() const override {
     uint32_t size = 0;
     auto current = begin_.get();
     while (current != nullptr) {
