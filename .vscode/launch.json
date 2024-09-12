@@ -8,7 +8,7 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/test/binary_search_test",
+      "program": "${workspaceFolder}/build/test/sort",
       "args": [
         "--gtest_filter=AnalysisOfAlgoTest.BitonicSearchTest"
       ],
