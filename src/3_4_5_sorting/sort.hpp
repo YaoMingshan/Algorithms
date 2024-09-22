@@ -136,10 +136,10 @@ class QuickSort {
       }
     }
 
-    std::swap(d.at(lo), d.at(i));
+    if (lo < i) std::swap(d.at(lo), d.at(i - 1));
 
-    if (lo < i) sort(d, lo, i - 1);
-    if (i < hi) sort(d, i + 1, hi);
+    if (lo < i - 1) sort(d, lo, i - 2);
+    if (i < hi) sort(d, i , hi);
   }
 
   uint32_t midian3(std::vector<T>& d, uint32_t lo, uint32_t mid, uint32_t hi) {
