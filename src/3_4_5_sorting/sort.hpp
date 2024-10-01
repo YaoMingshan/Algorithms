@@ -126,13 +126,13 @@ class QuickSort {
         std::swap(d.at(i), d.at(j));
         ++i;
         --j;
-      } else if (d.at(i) > pivot && d.at(j) >= pivot) {
+        continue;
+      }
+      if (d.at(j) >= pivot) {
         --j;
-      } else if (d.at(i) <= pivot && d.at(j) < pivot) {
+      }
+      if (d.at(i) <= pivot) {
         ++i;
-      } else {
-        ++i;
-        --j;
       }
     }
 
