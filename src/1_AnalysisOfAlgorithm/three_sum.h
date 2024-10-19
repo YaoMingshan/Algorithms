@@ -7,7 +7,7 @@
 #include <sstream>
 #include <vector>
 
-namespace algorithm {
+namespace algo {
 
 class ThreeSum {
  public:
@@ -45,4 +45,4 @@ class ThreeSum {
   std::vector<int32_t> data_;
 };
 
-}  // namespace algorithm
+}  // namespace algo

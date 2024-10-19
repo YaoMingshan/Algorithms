@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "test.h"
 
-using namespace algorithm;
+using namespace algo;
 
 void ThreeSumFunc(std::vector<int32_t> const& input) {
   auto ts = ThreeSum(input);

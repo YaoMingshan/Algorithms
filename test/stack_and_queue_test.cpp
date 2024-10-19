@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 #include "test.h"
 
-using namespace algorithm;
+using namespace algo;
 
 class Color {
 public:

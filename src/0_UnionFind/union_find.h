@@ -6,7 +6,7 @@
 #include <sstream>
 #include <vector>
 
-namespace algorithm {
+namespace algo {
 
 template <typename T>
 void PrintVec(std::vector<T> const& vec) {
@@ -130,4 +130,4 @@ class WeightedAndPathCopressionQuickUnion {
   std::vector<uint32_t> max_;
 };
 
-}  // namespace algorithm
+}  // namespace algo

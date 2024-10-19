@@ -9,7 +9,7 @@
 #include <sstream>
 #include <vector>
 
-namespace algorithm {
+namespace algo {
 
 template <typename T>
 class Stack {
@@ -217,4 +217,4 @@ class LinkedListQueue : public Queue<T> {
   LinkedListNode<T>* end_ = nullptr;
 };
 
-}  // namespace algorithm
+}  // namespace algo

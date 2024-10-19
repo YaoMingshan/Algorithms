@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "test.h"
 
-using namespace algorithm;
+using namespace algo;
 
 template <typename T>
 auto BinarySearchFunc(std::vector<T> const& input, T target = 0) {

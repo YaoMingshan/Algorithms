@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <vector>
 
-using namespace algorithm;
+using namespace algo;
 
 // Define a fixture class template
 class SortingTest : public ::testing::TestWithParam<uint32_t> {};

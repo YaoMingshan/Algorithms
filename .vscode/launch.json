@@ -8,9 +8,9 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/test/sort",
+      "program": "${workspaceFolder}/build/test/priority_queue_test",
       "args": [
-        "--gtest_filter=AnalysisOfAlgoTest.BitonicSearchTest"
+        ""
       ],
       "stopAtEntry": false,
       "cwd": "${fileDirname}",

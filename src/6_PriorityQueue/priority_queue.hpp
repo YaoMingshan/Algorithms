@@ -9,7 +9,7 @@
 #include <random>
 #include <sstream>
 #include <vector>
-namespace algorithm {
+namespace algo {
 enum class PQType { MAX, MIN };
 
 template <PQType P, typename T>
@@ -26,7 +26,7 @@ class PriorityQueue {
     assert(!IsEmpty());
     auto v = data_.at(1);
     std::swap(data_.at(1), data_.at(size_));
-    data_.erase(size_);
+    data_.erase(data_.begin() + size_);
     size_ -= 1;
     sink();
     return v;
@@ -54,28 +54,26 @@ class PriorityQueue {
   }
   void sink() {
     uint64_t pos = 1;
-    while (pos < size_) {
+    while (2 * pos <= size_) {
       bool swap = false;
       uint64_t idx = 0;
       if constexpr (P == PQType::MAX) {
-        if (2 * pos <= size_) {
-          swap |= data_.at(pos) < data_(2 * pos);
-          idx = 2 * pos;
+        auto cmp_idx = 2 * pos;
+        if (2 * pos + 1 <= size_ && data_.at(2 * pos  + 1) > data_.at(2 * pos)) {
+          cmp_idx = 2 * pos + 1;
         }
-
-        if (2 * pos + 1 <= size_) {
-          swap |= data_.at(pos) < data_(2 * pos);
-          if (data_.at(2 * pos + 1) > data_.at(2 * pos)) idx = 2 * pos + 1;
+        if (data_.at(pos) < data_.at(cmp_idx)) {
+          swap = true;
+          idx = cmp_idx;
         }
       } else {
-        if (2 * pos <= size_) {
-          swap |= data_.at(pos) > data_(2 * pos);
-          idx = 2 * pos;
+        auto cmp_idx = 2 * pos;
+        if (2 * pos + 1 <= size_ && data_.at(2 * pos  + 1) < data_.at(2 * pos)) {
+          cmp_idx = 2 * pos + 1;
         }
-
-        if (2 * pos + 1 <= size_) {
-          swap |= data_.at(pos) > data_(2 * pos);
-          if (data_.at(2 * pos + 1) > data_.at(2 * pos)) idx = 2 * pos + 1;
+        if (data_.at(pos) > data_.at(cmp_idx)) {
+          swap = true;
+          idx = cmp_idx;
         }
       }
 
@@ -93,4 +91,4 @@ template <typename T>
 using MaxPQ = PriorityQueue<PQType::MAX, T>;
 template <typename T>
 using MinPQ = PriorityQueue<PQType::MIN, T>;
-}  // namespace algorithm
+}  // namespace algo

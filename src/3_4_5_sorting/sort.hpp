@@ -10,7 +10,7 @@
 #include <sstream>
 #include <vector>
 
-namespace algorithm {
+namespace algo {
 
 template <typename T>
 class Shuffle {
@@ -158,4 +158,4 @@ class QuickSort {
   }
 };
 
-}  // namespace algorithm
+}  // namespace algo
