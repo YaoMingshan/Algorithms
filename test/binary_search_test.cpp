@@ -4,6 +4,8 @@
 #include "gtest/gtest.h"
 #include "test.h"
 
+using namespace algorithm;
+
 template <typename T>
 auto BinarySearchFunc(std::vector<T> const& input, T target = 0) {
   auto bs = BinarySearch<T>(input);

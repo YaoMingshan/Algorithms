@@ -1,6 +1,8 @@
 #include "0_UnionFind/union_find.h"
 #include "gtest/gtest.h"
 
+using namespace algorithm;
+
 TEST(UnionFindTest, QuickFindTest) {
   auto uf = QuickFind(8);
   uf.Union(0, 1);

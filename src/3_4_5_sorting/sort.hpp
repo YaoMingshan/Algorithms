@@ -10,6 +10,8 @@
 #include <sstream>
 #include <vector>
 
+namespace algorithm {
+
 template <typename T>
 class Shuffle {
  public:
@@ -155,3 +157,5 @@ class QuickSort {
     }
   }
 };
+
+}  // namespace algorithm

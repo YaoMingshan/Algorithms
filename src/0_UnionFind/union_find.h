@@ -6,6 +6,8 @@
 #include <sstream>
 #include <vector>
 
+namespace algorithm {
+
 template <typename T>
 void PrintVec(std::vector<T> const& vec) {
   std::stringstream ss_idx;
@@ -127,3 +129,5 @@ class WeightedAndPathCopressionQuickUnion {
   std::vector<uint32_t> sz_;
   std::vector<uint32_t> max_;
 };
+
+}  // namespace algorithm

@@ -7,6 +7,8 @@
 #include <sstream>
 #include <vector>
 
+namespace algorithm {
+
 class ThreeSum {
  public:
   ThreeSum(std::vector<int32_t> data) : data_(std::move(data)) {}
@@ -42,3 +44,5 @@ class ThreeSum {
  private:
   std::vector<int32_t> data_;
 };
+
+}  // namespace algorithm

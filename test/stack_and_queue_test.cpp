@@ -3,6 +3,8 @@
 #include "gtest/gtest.h"
 #include "test.h"
 
+using namespace algorithm;
+
 class Color {
 public:
   Color(std::string color): color_(std::move(color)) {}

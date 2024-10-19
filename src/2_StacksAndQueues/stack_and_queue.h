@@ -9,6 +9,8 @@
 #include <sstream>
 #include <vector>
 
+namespace algorithm {
+
 template <typename T>
 class Stack {
  public:
@@ -214,3 +216,5 @@ class LinkedListQueue : public Queue<T> {
   std::unique_ptr<LinkedListNode<T>> begin_ = nullptr;
   LinkedListNode<T>* end_ = nullptr;
 };
+
+}  // namespace algorithm

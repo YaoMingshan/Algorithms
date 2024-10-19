@@ -7,6 +7,8 @@
 #include <sstream>
 #include <vector>
 
+namespace algorithm {
+
 template <typename T>
 class BinarySearch {
  public:
@@ -85,3 +87,5 @@ class BitonicSearch {
  private:
   std::vector<T> data_;
 };
+
+}  // namespace algorithm
