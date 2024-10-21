@@ -17,9 +17,19 @@ class BST {
   BST() {}
   ~BST() { DeleteNodes(root_); }
 
+  struct Node {
+   public:
+    Node(TK k, TV v) : key(k), val(v), lhs(nullptr), rhs(nullptr), count(1) {}
+    TK key;
+    TV val;
+    Node* lhs;
+    Node* rhs;
+    uint64_t count;
+  };
+
   void Put(TK k, TV v) { root_ = Put(root_, k, v); }
   Node* Get(TK k) { return Get(root_, k); }
-  void Delete(TK k) {}
+  void Delete(TK k) { root_ = Delete(root_, k); }
   Node* Min() { return Min(root_); }
   Node* Max() { return Max(root_); }
   Node* Floor(TK k) {
@@ -36,18 +46,13 @@ class BST {
     // find key which rank(key) == num
     return Select(root_, num);
   }
+  std::vector<TK> Inorder() {
+    std::vector<TK> keys;
+    Inorder(root_, keys);
+    return keys;
+  }
 
  private:
-  struct Node {
-   public:
-    Node(TK k, TV v) : key(k), val(v), lhs(nullptr), rhs(nullptr), count(1) {}
-    TK key;
-    TV val;
-    Node* lhs;
-    Node* rhs;
-    uint64_t count;
-  };
-
   Node* Put(Node* node, TK k, TV v) {
     if (node == nullptr) return new Node(k, v);
     if (node->key == k) {
@@ -58,9 +63,7 @@ class BST {
       node->rhs = Put(node->rhs, k, v);
     }
 
-    node->count = Size(node);
-    // if (node->lhs) node->count += node->lhs->count;
-    // if (node->rhs) node->count += node->rhs->count;
+    node->count = Size(node->lhs) + Size(node->rhs) + 1;
     return node;
   }
 
@@ -112,9 +115,9 @@ class BST {
   Node* Ceil(Node* node, TK k) {
     if (node == nullptr) return nullptr;
     if (node->key < k) {
-      return Floor(node->rhs, k);
+      return Ceil(node->rhs, k);
     } else if (node->key > k) {
-      auto res = Floor(node->lhs, k);
+      auto res = Ceil(node->lhs, k);
       if (res) return res;
       return node;
     } else {
@@ -124,7 +127,7 @@ class BST {
 
   uint64_t Size(Node* node) {
     if (node == nullptr) return 0;
-    node->count = Size(node->lhs) + Size(node->rhs) + 1
+    // node->count = Size(node->lhs) + Size(node->rhs) + 1;
     return node->count;
   }
 
@@ -174,6 +177,7 @@ class BST {
           seccessor->lhs = node->lhs;
           seccessor->rhs = rhs_min_child;
         }
+        return seccessor;
       } else if (node->lhs) {
         auto res = node->lhs;
         delete node;
@@ -184,6 +188,8 @@ class BST {
         return res;
       }
     }
+
+    node->count = Size(node->lhs) + Size(node->rhs) + 1;
   }
 
   Node* FindMinFather(Node* node) {
@@ -195,6 +201,13 @@ class BST {
     } else {
       return nullptr;
     }
+  }
+
+  void Inorder(Node* node, std::vector<TK>& keys) {
+    if (node == nullptr) return;
+    Inorder(node->lhs, keys);
+    keys.push_back(node->key);
+    Inorder(node->rhs, keys);
   }
 
   Node* root_ = nullptr;
