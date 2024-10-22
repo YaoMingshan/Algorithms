@@ -156,14 +156,17 @@ class BST {
 
   Node* Delete(Node* node, TK k) {
     if (node == nullptr) return nullptr;
+    Node* res = nullptr;
     if (node->key > k) {
       node->lhs = Delete(node->lhs, k);
+      res = node;
     } else if (node->key < k) {
       node->rhs = Delete(node->rhs, k);
+      res = node;
     } else {
       if (node->lhs == nullptr && node->rhs == nullptr) {
         delete node;
-        return nullptr;
+        res = nullptr;
       } else if (node->lhs != nullptr && node->rhs != nullptr) {
         Node* rhs_min = Min(node->rhs);
         Node* rhs_min_father = FindMinFather(node->rhs);
@@ -171,25 +174,24 @@ class BST {
         Node* seccessor = rhs_min;
         if (rhs_min_father) {
           seccessor->lhs = node->lhs;
-          seccessor->rhs = rhs_min_father;
+          seccessor->rhs = node->rhs;
           rhs_min_father->lhs = rhs_min_child;
         } else {
           seccessor->lhs = node->lhs;
           seccessor->rhs = rhs_min_child;
         }
-        return seccessor;
+        res = seccessor;
       } else if (node->lhs) {
-        auto res = node->lhs;
+        res = node->lhs;
         delete node;
-        return res;
       } else {
-        auto res = node->rhs;
+        res = node->rhs;
         delete node;
-        return res;
       }
     }
 
     node->count = Size(node->lhs) + Size(node->rhs) + 1;
+    return res;
   }
 
   Node* FindMinFather(Node* node) {
