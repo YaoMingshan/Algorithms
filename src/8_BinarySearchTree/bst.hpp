@@ -190,7 +190,7 @@ class BST {
       }
     }
 
-    node->count = Size(node->lhs) + Size(node->rhs) + 1;
+    if (res) res->count = Size(res->lhs) + Size(res->rhs) + 1;
     return res;
   }
 
