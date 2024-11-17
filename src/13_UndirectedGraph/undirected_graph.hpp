@@ -7,8 +7,10 @@
 #include <iterator>
 #include <list>
 #include <memory>
+#include <queue>
 #include <random>
 #include <sstream>
+#include <stack>
 #include <vector>
 
 namespace algo {
@@ -23,6 +25,7 @@ class Graph {
   }
 
   std::list<uint64_t>& Adj(uint64_t v) { return adj_.at(v); }
+  std::list<uint64_t> Adj(uint64_t v) const { return adj_.at(v); }
 
   uint64_t V() const { return vertex_num_; }
   uint64_t E() const {
@@ -43,9 +46,7 @@ class Graph {
     return ss.str();
   }
 
-  uint64_t Degree(uint64_t v) const {
-    return adj_.at(v).size();
-  }
+  uint64_t Degree(uint64_t v) const { return adj_.at(v).size(); }
   uint64_t MaxDegree() const {
     uint64_t max = 0;
     for (auto&& l : adj_) {
@@ -68,6 +69,134 @@ class Graph {
  private:
   const uint64_t vertex_num_;
   std::vector<std::list<uint64_t>> adj_;
+};
+
+class BFSPaths {
+ public:
+  BFSPaths(Graph const& g, uint64_t s)
+      : start_(s),
+        visited_(g.V(), false),
+        edge_to_(g.V(), -1u),
+        dist_(g.V(), 0) {
+    std::queue<uint64_t> vertex_queue;
+    Bfs(g, s, vertex_queue);
+  }
+
+  bool HasPathTo(uint64_t v) { return visited_.at(v); }
+
+  std::stack<uint64_t> PathTo(uint64_t v) {
+    std::stack<uint64_t> path = {};
+    if (HasPathTo(v)) {
+      while (v != -1u) {
+        path.push(v);
+        v = edge_to_.at(v);
+      }
+    }
+    return path;
+  }
+
+  uint64_t Distance(uint64_t v) {
+    uint64_t dist = -1u;
+    if (HasPathTo(v)) {
+      dist = dist_.at(v);
+    }
+    return dist;
+  }
+
+ private:
+  void Bfs(Graph const& g, uint64_t s, std::queue<uint64_t>& q) {
+    q.push(s);
+    while (!q.empty()) {
+      auto v = q.front();
+      visited_.at(v) = true;
+      for (auto&& w : g.Adj(v)) {
+        if (!visited_.at(w)) {
+          q.push(w);
+          edge_to_.at(w) = v;
+          dist_.at(w) = dist_.at(v) + 1;
+        }
+      }
+      q.pop();
+    }
+  }
+
+  std::vector<bool> visited_;
+  std::vector<uint64_t> edge_to_;
+  std::vector<uint64_t> dist_;
+  uint64_t start_;
+};
+
+class DFSPaths {
+ public:
+  DFSPaths(Graph const& g, uint64_t s)
+      : start_(s), visited_(g.V(), false), edge_to_(g.V(), -1u) {
+    Dfs(g, s);
+  }
+
+  bool HasPathTo(uint64_t v) { return visited_.at(v); }
+
+  std::stack<uint64_t> PathTo(uint64_t v) {
+    std::stack<uint64_t> path = {};
+    if (HasPathTo(v)) {
+      while (v != -1u) {
+        path.push(v);
+        v = edge_to_.at(v);
+      }
+    }
+    return path;
+  }
+
+ private:
+  void Dfs(Graph const& g, uint64_t s) {
+    visited_.at(s) = true;
+    for (auto&& w : g.Adj(s)) {
+      if (!visited_.at(w)) {
+        Dfs(g, w);
+        edge_to_.at(w) = s;  // chage edge_to after recursive adj vertex
+      }
+    }
+  }
+
+  std::vector<bool> visited_;
+  std::vector<uint64_t> edge_to_;
+  uint64_t start_;
+};
+
+class ConnectedComponent {
+ public:
+  ConnectedComponent(Graph const& g)
+      : count_(0), visited_(g.V(), false) {
+    for (uint64_t i = 0; i < g.V(); ++i) connected_.push_back(i);
+    CC(g);
+  }
+
+  bool IsConnected(uint64_t v, uint64_t w) {
+    return connected_.at(v) == connected_.at(w);
+  }
+
+ private:
+  void Dfs(Graph const& g, uint64_t s) {
+    visited_.at(s) = true;
+    connected_.at(s) = count_;
+    for (auto&& w : g.Adj(s)) {
+      if (!visited_.at(w)) {
+        Dfs(g, w);
+      }
+    }
+  }
+
+  void CC(Graph const& g) {
+    for (uint64_t v = 0; v < g.V(); ++v) {
+      if (!visited_.at(v)) {
+        Dfs(g, v);
+        ++count_;
+      }
+    }
+  }
+
+  std::vector<bool> visited_;
+  std::vector<uint64_t> connected_;
+  uint64_t count_;
 };
 
 }  // namespace algo
