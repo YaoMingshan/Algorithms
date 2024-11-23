@@ -151,8 +151,8 @@ class DFSPaths {
     visited_.at(s) = true;
     for (auto&& w : g.Adj(s)) {
       if (!visited_.at(w)) {
+        edge_to_.at(w) = s;
         Dfs(g, w);
-        edge_to_.at(w) = s;  // chage edge_to after recursive adj vertex
       }
     }
   }
@@ -164,8 +164,7 @@ class DFSPaths {
 
 class ConnectedComponent {
  public:
-  ConnectedComponent(Graph const& g)
-      : count_(0), visited_(g.V(), false) {
+  ConnectedComponent(Graph const& g) : count_(0), visited_(g.V(), false) {
     for (uint64_t i = 0; i < g.V(); ++i) connected_.push_back(i);
     CC(g);
   }
@@ -197,6 +196,72 @@ class ConnectedComponent {
   std::vector<bool> visited_;
   std::vector<uint64_t> connected_;
   uint64_t count_;
+};
+
+class Cycle {
+ public:
+  Cycle(Graph const& g) : visited_(g.V(), false), edge_to_(g.V(), -1u) {
+    // FIXME: exclude two form, they are both cycle:
+    //          - self loop
+    //          - multi edge bewteen two vertex
+    for (auto v = 0; v < g.V(); ++v) {
+      if (!visited_.at(v)) Dfs(g, v, v);
+    }
+  }
+
+  bool IsAcycle() { return cycle_.empty(); }
+  std::stack<uint64_t> CyclePath() { return cycle_; }
+
+ private:
+  void Dfs(Graph const& g, uint64_t s, uint64_t d) {
+    visited_.at(s) = true;
+    for (auto&& w : g.Adj(s)) {
+      if (!visited_.at(w)) {
+        edge_to_.at(w) = s;
+        Dfs(g, w, s);
+      } else {
+        if (w != d && cycle_.empty()) {
+          for (auto v = s; v != w; v = edge_to_.at(v)) {
+            cycle_.push(v);
+          }
+          cycle_.push(w);
+          cycle_.push(s);
+        }
+      }
+    }
+  }
+
+  std::vector<bool> visited_;
+  std::vector<uint64_t> edge_to_;
+  std::stack<uint64_t> cycle_;
+};
+
+class Bipartite {
+ public:
+  Bipartite(Graph const& g) : visited_(g.V(), false), color_(g.V(), false) {
+    for (auto v = 0; v < g.V(); ++v) {
+      if (!visited_.at(v)) Dfs(g, v);
+    }
+  }
+
+  bool IsBipartite() { return bipartitle_; }
+
+ private:
+  void Dfs(Graph const& g, uint64_t s) {
+    visited_.at(s) = true;
+    for (auto&& w : g.Adj(s)) {
+      if (!visited_.at(w)) {
+        color_.at(w) = !color_.at(s);
+        Dfs(g, w);
+      } else {
+        if (color_.at(w) == color_.at(s)) bipartitle_ = false;
+      }
+    }
+  }
+
+  bool bipartitle_ = true;
+  std::vector<bool> color_;
+  std::vector<bool> visited_;
 };
 
 }  // namespace algo

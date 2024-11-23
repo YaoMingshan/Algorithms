@@ -93,3 +93,48 @@ TEST(UndirectedGraphTest, ConnectedComponentTest) {
   EXPECT_TRUE(cc.IsConnected(10, 11));
   EXPECT_FALSE(cc.IsConnected(2, 8));
 }
+
+TEST(UndirectedGraphTest, CycleTest) {
+  Graph g(13);
+  g.AddEdge(0, 1);
+  g.AddEdge(0, 2);
+  g.AddEdge(0, 5);
+  g.AddEdge(0, 6);
+  g.AddEdge(3, 4);
+  g.AddEdge(3, 5);
+  g.AddEdge(4, 5);
+  g.AddEdge(4, 6);
+  g.AddEdge(7, 8);
+  g.AddEdge(9, 10);
+  g.AddEdge(9, 11);
+  g.AddEdge(9, 12);
+  g.AddEdge(11, 12);
+
+  Cycle c(g);
+  EXPECT_FALSE(c.IsAcycle());
+  auto paths = c.CyclePath();
+  while (!paths.empty()) {
+    std::cout << std::to_string(paths.top()) << std::endl;
+    paths.pop();
+  }
+}
+
+TEST(UndirectedGraphTest, BipartiteTest) {
+  Graph g(13);
+  g.AddEdge(0, 1);
+  g.AddEdge(0, 2);
+  g.AddEdge(0, 5);
+  g.AddEdge(0, 6);
+  g.AddEdge(3, 4);
+  g.AddEdge(3, 5);
+  g.AddEdge(4, 5);
+  g.AddEdge(4, 6);
+  g.AddEdge(7, 8);
+  g.AddEdge(9, 10);
+  g.AddEdge(9, 11);
+  g.AddEdge(9, 12);
+  g.AddEdge(11, 12);
+
+  Bipartite b(g);
+  EXPECT_FALSE(b.IsBipartite());
+}
