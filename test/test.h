@@ -8,8 +8,8 @@
 #include <utility>
 
 template <typename T>
-std::vector<T> GenRandomInput(uint32_t size, int32_t min = 0,
-                              int32_t max = 10) {
+inline std::vector<T> GenRandomInput(uint32_t size, int32_t min = 0,
+                                     int32_t max = 10) {
   // std::random_device rd;
   auto seed = 0x1234;
   std::mt19937 engine(seed);
@@ -23,10 +23,11 @@ std::vector<T> GenRandomInput(uint32_t size, int32_t min = 0,
   return input;
 }
 
-auto TimeNow() { return std::chrono::high_resolution_clock::now(); }
+inline auto TimeNow() { return std::chrono::high_resolution_clock::now(); }
 
-uint64_t DurationSeconds(std::chrono::_V2::system_clock::time_point start,
-                         std::chrono::_V2::system_clock::time_point end) {
+inline uint64_t DurationSeconds(
+    std::chrono::_V2::system_clock::time_point start,
+    std::chrono::_V2::system_clock::time_point end) {
   auto duration =
       std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
   std::cout << "Run duration: " << duration << " Seconds" << std::endl;
@@ -34,7 +35,7 @@ uint64_t DurationSeconds(std::chrono::_V2::system_clock::time_point start,
 }
 
 template <typename Func, typename... Args>
-auto MeasureFuncExecTime(Func func, Args&&... args)
+inline auto MeasureFuncExecTime(Func func, Args&&... args)
     -> std::enable_if_t<
         !std::is_void_v<decltype(func(std::forward<Args>(args)...))>,
         std::pair<std::optional<decltype(func(std::forward<Args>(args)...))>,
@@ -52,7 +53,7 @@ auto MeasureFuncExecTime(Func func, Args&&... args)
 }
 
 template <typename Func, typename... Args>
-auto MeasureFuncExecTime(Func func, Args&&... args)
+inline auto MeasureFuncExecTime(Func func, Args&&... args)
     -> std::enable_if_t<
         std::is_void_v<decltype(func(std::forward<Args>(args)...))>,
         std::pair<std::optional<std::monostate>, uint64_t>> {
@@ -66,4 +67,13 @@ auto MeasureFuncExecTime(Func func, Args&&... args)
   auto seconds = DurationSeconds(start, end);
   return std::make_pair(std::optional<std::monostate>{std::monostate{}},
                         seconds);
+}
+
+template <typename T>
+inline void PrintVecInline(std::vector<T> const& v) {
+  std::stringstream ss;
+  for (auto&& e : v) {
+    ss << e << " ";
+  }
+  std::cout << ss.str() << std::endl;
 }

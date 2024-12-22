@@ -8,7 +8,7 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/test/undirected_graph",
+      "program": "${workspaceFolder}/build/test/digraph",
       "args": [
         ""
       ],
