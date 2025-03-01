@@ -8,6 +8,7 @@ enable_testing()
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(leetcode)
 include(FetchContent)
 
 set(EXTERNAL_PROJECT_DIR ${CMAKE_SOURCE_DIR}/3rdparty)  # 指定外部项目下载目录
