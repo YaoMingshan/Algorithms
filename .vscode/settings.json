@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.inc": "cpp",
         "cstdint": "cpp",
         "strstream": "cpp",
         "any": "cpp",
@@ -67,6 +68,7 @@
         "numbers": "cpp",
         "semaphore": "cpp",
         "span": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "stack": "cpp"
     }
 }
