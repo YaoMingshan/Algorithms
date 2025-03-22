@@ -8,7 +8,7 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/leetcode/lt76_minWindow",
+      "program": "${workspaceFolder}/build/leetcode/lt452_findMinArrowShots",
       "args": [
         ""
       ],
