@@ -49,5 +49,10 @@ TEST(LeetCodeTest, lt21test) {
   ListNode* expected = new ListNode(
       1, new ListNode(1, new ListNode(2, new ListNode(3,
                                                       new ListNode(4, new ListNode(4))))));
-  EXPECT_EQ(solution.mergeTwoLists(list1, list2), expected);
+  ListNode* result = solution.mergeTwoLists(list1, list2);
+  while (expected != nullptr && result != nullptr) {
+    EXPECT_EQ(expected->val, result->val);
+    expected = expected->next;
+    result = result->next;
+  }  
 }

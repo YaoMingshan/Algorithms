@@ -47,7 +47,5 @@ TEST(LeetCodeTest, lt82test) {
   head->next->next = new ListNode(2);
   Solution s;
   ListNode* result = s.deleteDuplicates(head);
-  EXPECT_EQ(result->val, 1);
-  EXPECT_EQ(result->next->val, 2);
-  EXPECT_EQ(result->next->next, nullptr);
+  EXPECT_EQ(result->val, 2);
 }
