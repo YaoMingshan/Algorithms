@@ -8,7 +8,7 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/leetcode/lt82_deleteDuplicates",
+      "program": "${workspaceFolder}/build/leetcode/lt124_maxSum",
       "args": [
         ""
       ],
